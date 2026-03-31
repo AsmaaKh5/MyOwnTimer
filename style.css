@@ -1,0 +1,257 @@
+/* style.css */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f2efe9;
+    background-image: radial-gradient(#d8d4cc 1px, transparent 1px);
+    background-size: 24px 24px;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    color: #2c3e50;
+    gap: 16px;
+    padding: 24px 16px;
+}
+
+/* ـــ الكارد الرئيسي ـــ */
+.container {
+    background: white;
+    border-radius: 20px;
+    padding: 32px 28px;
+    width: 90%;
+    max-width: 380px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    border: 1px solid #e8e4dc;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 32px;
+    color: #7b8793;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* ـــ شاشة الإعداد ـــ */
+.input-section {
+    margin-bottom: 32px;
+}
+
+.input-section label {
+    display: block;
+    font-size: 13px;
+    color: #7b8793;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.time-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 2px solid #e8e4dc;
+    border-radius: 12px;
+    padding: 0 16px;
+    transition: all 0.3s;
+    background: #f8f5f0;
+    overflow: hidden;
+}
+
+.time-input:focus-within {
+    border-color: #2c3e50;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(44,62,80,0.08);
+}
+
+.time-input input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: none;
+    font-size: clamp(36px, 10vw, 56px);
+    font-weight: 300;
+    padding: 16px 0;
+    outline: none;
+    color: #2c3e50;
+    text-align: center;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+}
+
+.time-input input::placeholder { color: #ccc; }
+
+.time-input input::-webkit-outer-spin-button,
+.time-input input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+.time-input .unit {
+    font-size: 14px;
+    color: #7b8793;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.start-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 15px;
+    font-weight: 500;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+}
+
+.start-btn:hover { background: #1a252f; }
+.start-btn:active { background: #1a252f; transform: scale(0.98); }
+
+/* ـــ شاشة التايمر ـــ */
+.timer-screen { display: none; }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e8e4dc;
+}
+
+.header .label { font-size: 13px; color: #7b8793; font-weight: 500; }
+.header .end-time { font-size: 15px; color: #2c3e50; font-weight: 600; }
+
+.countdown-display {
+    text-align: center;
+    margin: 24px 0 36px;
+}
+
+.countdown {
+    font-size: clamp(56px, 16vw, 72px);
+    font-weight: 300;
+    color: #2c3e50;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.5s;
+}
+
+.countdown.urgent { color: #e74c3c; }
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #95a5a6;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    height: 6px;
+    background: #e8e4dc;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #2c3e50;
+    border-radius: 3px;
+    transition: width 1s linear, background 0.3s;
+}
+
+.progress-fill.urgent { background: #e74c3c; }
+
+/* ـــ شاشة الانتهاء ـــ */
+.done-screen { display: none; text-align: center; }
+
+.done-icon { font-size: 52px; margin-bottom: 16px; }
+
+.done-text { margin-bottom: 32px; }
+.done-text h2 { font-size: 22px; margin-bottom: 8px; font-weight: 600; }
+.done-text p { font-size: 14px; color: #7b8793; line-height: 1.6; }
+
+.new-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 15px;
+    font-weight: 500;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+}
+
+.new-btn:hover { background: #1a252f; }
+.new-btn:active { background: #1a252f; transform: scale(0.98); }
+
+/* ـــ الـ Quote ـــ */
+.quote-box {
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+    padding: 22px 24px;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #e8e4dc;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    transition: opacity 0.5s ease;
+}
+
+.quote-box p {
+    font-size: clamp(16px, 4.5vw, 20px);
+    color: #4a4540;
+    font-weight: 400;
+    line-height: 1.7;
+    font-style: italic;
+    margin: 0;
+}
+
+/* ـــ الإحصائيات ـــ */
+.stats-box {
+    width: 90%;
+    max-width: 380px;
+    display: flex;
+    gap: 10px;
+}
+
+.stat-card {
+    flex: 1;
+    background: white;
+    border-radius: 16px;
+    padding: 14px 8px;
+    text-align: center;
+    border: 1px solid #e8e4dc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.stat-emoji { font-size: 18px; margin-bottom: 6px; }
+
+.stat-card .stat-value {
+    font-size: clamp(20px, 6vw, 28px);
+    font-weight: 300;
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+.stat-card .stat-label {
+    font-size: clamp(9px, 2.5vw, 11px);
+    color: #95a5a6;
+    font-weight: 500;
+}
+
+/* ـــ Responsive ـــ */
+@media (max-width: 400px) {
+    body { padding: 16px 12px; gap: 12px; }
+    .container { padding: 24px 20px; border-radius: 16px; }
+    .quote-box { padding: 18px 20px; border-radius: 16px; }
+    .stat-card { border-radius: 12px; padding: 12px 6px; }
+    .header { margin-bottom: 24px; }
+    .countdown-display { margin: 20px 0 28px; }
+}

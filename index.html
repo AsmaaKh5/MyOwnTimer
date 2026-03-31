@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تايمر المذاكرة</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo">⏳ تايمر المذاكرة</div>
+
+        <!-- شاشة الإعداد -->
+        <div class="setup-screen" id="setupScreen">
+            <div class="input-section">
+                <label>🎯 مدة الجلسة</label>
+                <div class="time-input">
+                    <input type="number" id="minutesInput" placeholder="30" min="1" max="180"/>
+                    <span class="unit">دقيقة</span>
+                </div>
+            </div>
+            <button class="start-btn" onclick="startTimer()">🚀 بدء الجلسة</button>
+        </div>
+
+        <!-- شاشة التايمر -->
+        <div class="timer-screen" id="timerScreen">
+            <div class="header">
+                <span class="label">⏰ ينتهي الساعة</span>
+                <span class="end-time" id="endTimeDisplay">--:--</span>
+            </div>
+            <div class="countdown-display">
+                <div class="countdown" id="countdown">00:00</div>
+            </div>
+            <div>
+                <div class="progress-labels">
+                    <span id="startLabel">--:--</span>
+                    <span id="endLabel">--:--</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width:0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- شاشة الانتهاء -->
+        <div class="done-screen" id="doneScreen">
+            <div class="done-icon">🎉</div>
+            <div class="done-text">
+                <h2>انتهت الجلسة!</h2>
+                <p>اكتملت جلسة المذاكرة الساعة <span id="doneTime">--:--</span> 🕐</p>
+            </div>
+            <button class="new-btn" onclick="resetTimer()">✨ جلسة جديدة</button>
+        </div>
+    </div>
+
+    <!-- الـ Quote -->
+    <div class="quote-box">
+        <p id="quoteText"></p>
+    </div>
+
+    <!-- الإحصائيات -->
+    <div class="stats-box">
+        <div class="stat-card">
+            <div class="stat-emoji">📅</div>
+            <div class="stat-value" id="sessionsToday">0</div>
+            <div class="stat-label">جلسات اليوم</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-emoji">⏱️</div>
+            <div class="stat-value" id="minutesToday">0</div>
+            <div class="stat-label">دقيقة النهارده</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-emoji">🏆</div>
+            <div class="stat-value" id="totalSessions">0</div>
+            <div class="stat-label">إجمالي الجلسات</div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
