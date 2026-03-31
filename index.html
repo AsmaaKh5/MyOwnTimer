@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تايمر المذاكرة</title>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
 </head>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/MyOwnTimer/sw.js');
+    }
+</script>
+
 <body>
 
     <div class="container">
@@ -17,7 +29,7 @@
             <div class="input-section">
                 <label>🎯 مدة الجلسة</label>
                 <div class="time-input">
-                    <input type="number" id="minutesInput" placeholder="30" min="1" max="180"/>
+                    <input type="number" id="minutesInput" placeholder="30" min="1" max="180" />
                     <span class="unit">دقيقة</span>
                 </div>
             </div>
@@ -81,4 +93,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>
