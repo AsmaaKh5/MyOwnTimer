@@ -13,11 +13,6 @@
     <meta name="theme-color" content="#2c3e50">
 </head>
 
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/MyOwnTimer/sw.js');
-    }
-</script>
 
 <body>
 
@@ -92,6 +87,12 @@
     </div>
 
     <script src="app.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/MyOwnTimer/sw.js');
+        }
+    </script>
 </body>
 
 </html>
