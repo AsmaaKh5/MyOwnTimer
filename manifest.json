@@ -1,8 +1,8 @@
 {
-    "name": "تايمر المذاكرة",
-    "short_name": "تايمر",
-    "description": "تايمر مذاكرة مرتبط بالساعة الحقيقية",
-    "start_url": "/MyOwnTimer/",
+    "name": "Time Blocker",
+    "short_name": "TimeBlocker",
+    "description": "نظام Time Blocking لتنظيم يومك",
+    "start_url": "./",
     "display": "standalone",
     "background_color": "#f2efe9",
     "theme_color": "#2c3e50",

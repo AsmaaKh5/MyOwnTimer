@@ -1,97 +1,178 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⏳ تايمر المذاكرة</title>   
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap"
+    <title>⏳ Time Blocker</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2c3e50">
 </head>
 
-
 <body>
 
-    <div class="container">
-        <div class="logo">⏳ تايمر المذاكرة</div>
+    <div class="app-container">
 
-        <!-- شاشة الإعداد -->
-        <div class="setup-screen" id="setupScreen">
-            <div class="input-section">
-                <label>🎯 مدة الجلسة</label>
-                <div class="time-input">
-                    <input type="number" id="minutesInput" placeholder="30" min="1" max="180" />
-                    <span class="unit">دقيقة</span>
-                </div>
-            </div>
-            <button class="start-btn" onclick="startTimer()">🚀 بدء الجلسة</button>
+        <div class="app-header">
+            <div class="logo">⏳ Time Blocker</div>
+            <div class="today-date" id="todayDate"></div>
         </div>
 
-        <!-- شاشة التايمر -->
-        <div class="timer-screen" id="timerScreen">
-            <div class="header">
-                <span class="label">⏰ ينتهي الساعة</span>
-                <span class="end-time" id="endTimeDisplay">--:--</span>
+        <!-- ===== شاشة التخطيط ===== -->
+        <div class="screen" id="planScreen">
+
+            <div class="plan-header">
+                <div class="section-title" id="planTitle">📋 خطط يومك</div>
+                <button class="back-to-run-btn" id="backToRunBtn" onclick="backToRun()" style="display:none">
+                    ← رجوع
+                </button>
             </div>
-            <div class="countdown-display">
-                <div class="countdown" id="countdown">00:00</div>
+
+            <div class="edit-notice" id="editNotice" style="display:none">
+                ⚠️ التاسكات اللي خلصت أو فات وقتها مش هتتغير
             </div>
-            <div>
-                <div class="progress-labels">
-                    <span id="startLabel">--:--</span>
-                    <span id="endLabel">--:--</span>
+
+            <div class="add-task-box">
+                <input type="text" id="taskNameInput" placeholder="اسم التاسك (مثلاً: رياضيات)" maxlength="50" />
+                <div class="task-time-row">
+                    <div class="time-field">
+                        <label>🕐 من</label>
+                        <input type="time" id="taskStartTime" class="time-picker" />
+                    </div>
+                    <div class="time-field">
+                        <label>🕐 لحد</label>
+                        <input type="time" id="taskEndTime" class="time-picker" />
+                    </div>
+                </div>
+                <div class="color-field">
+                    <label>🎨 اللون</label>
+                    <div class="color-options" id="colorOptions">
+                        <span class="color-dot selected" data-color="#3498db" style="background:#3498db"></span>
+                        <span class="color-dot" data-color="#e74c3c" style="background:#e74c3c"></span>
+                        <span class="color-dot" data-color="#2ecc71" style="background:#2ecc71"></span>
+                        <span class="color-dot" data-color="#f39c12" style="background:#f39c12"></span>
+                        <span class="color-dot" data-color="#9b59b6" style="background:#9b59b6"></span>
+                        <span class="color-dot" data-color="#1abc9c" style="background:#1abc9c"></span>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addTask()">➕ أضف التاسك</button>
+            </div>
+
+            <div class="tasks-list" id="tasksList">
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">📝</div>
+                    <p>ابدأ أضف تاسكات يومك!</p>
+                </div>
+            </div>
+
+            <div class="plan-summary" id="planSummary" style="display:none">
+                <div class="summary-row">
+                    <span>📊 إجمالي التاسكات:</span>
+                    <span id="totalTasks">0</span>
+                </div>
+                <div class="summary-row">
+                    <span>⏱️ إجمالي وقت الشغل:</span>
+                    <span id="totalTime">0 دقيقة</span>
+                </div>
+                <div class="summary-row">
+                    <span>🏁 آخر تاسك بتخلص:</span>
+                    <span id="expectedEnd">--:--</span>
+                </div>
+                <button class="start-day-btn" id="startDayBtn" onclick="startDay()">🚀 ابدأ يومك!</button>
+            </div>
+        </div>
+
+        <!-- ===== شاشة التنفيذ ===== -->
+        <div class="screen" id="runScreen" style="display:none">
+
+            <div class="edit-plan-bar">
+                <button class="edit-plan-btn" onclick="editPlan()">✏️ عدّل الخطة</button>
+            </div>
+
+            <div class="waiting-card" id="waitingCard" style="display:none">
+                <div class="waiting-icon">☕</div>
+                <div class="waiting-text">استريّح شوية!</div>
+                <div class="waiting-next">
+                    <span>التاسك الجاية:</span>
+                    <strong id="nextTaskName">--</strong>
+                </div>
+                <div class="waiting-countdown">
+                    بتبدأ بعد <span id="waitCountdown" class="wait-time">--:--</span>
+                </div>
+                <div class="waiting-start-time">
+                    🕐 الساعة <span id="nextStartTime">--:--</span>
+                </div>
+            </div>
+
+            <div class="current-task-card" id="currentTaskCard" style="display:none">
+                <div class="task-badge" id="currentTaskBadge">1/3</div>
+                <div class="current-task-name" id="currentTaskName">رياضيات</div>
+                <div class="task-time-range" id="taskTimeRange">08:00 → 08:30</div>
+                <div class="countdown-display">
+                    <div class="countdown" id="countdown">00:00</div>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" id="progressBar" style="width:0%"></div>
+                    <div class="progress-fill" id="progressBar"></div>
                 </div>
+                <button class="done-early-btn" onclick="markDoneEarly()">✅ خلصت التاسك دي</button>
+            </div>
+
+            <div class="schedule-section">
+                <div class="section-title">📅 جدول اليوم</div>
+                <div class="schedule-list" id="scheduleList"></div>
             </div>
         </div>
 
-        <!-- شاشة الانتهاء -->
-        <div class="done-screen" id="doneScreen">
-            <div class="done-icon">🎉</div>
-            <div class="done-text">
-                <h2>انتهت الجلسة!</h2>
-                <p>اكتملت جلسة المذاكرة الساعة <span id="doneTime">--:--</span> 🕐</p>
+        <!-- ===== شاشة النتائج ===== -->
+        <div class="screen" id="resultsScreen" style="display:none">
+
+            <div id="reviewPhase">
+                <div class="review-header">
+                    <div class="review-icon">📋</div>
+                    <h2>راجع يومك</h2>
+                    <p>حدد كل تاسك خلصتها ولا لأ</p>
+                </div>
+                <div class="review-list" id="reviewList"></div>
+                <button class="confirm-review-btn" id="confirmReviewBtn" onclick="confirmReview()" disabled>
+                    📋 حدد كل التاسكات الأول
+                </button>
             </div>
-            <button class="new-btn" onclick="resetTimer()">✨ جلسة جديدة</button>
+
+            <div id="resultsPhase" style="display:none">
+                <div class="results-header">
+                    <div class="results-icon">🏆</div>
+                    <h2>خلص يومك!</h2>
+                    <p class="results-subtitle" id="resultsSubtitle"></p>
+                </div>
+                <div class="results-stats">
+                    <div class="result-card completed">
+                        <div class="result-value" id="completedCount">0</div>
+                        <div class="result-label">✅ خلصت</div>
+                    </div>
+                    <div class="result-card missed">
+                        <div class="result-value" id="missedCount">0</div>
+                        <div class="result-label">❌ مخلصتش</div>
+                    </div>
+                </div>
+                <div class="results-timeline" id="resultsTimeline"></div>
+                <button class="new-day-btn" onclick="newDay()">✨ يوم جديد</button>
+            </div>
         </div>
+
     </div>
 
-    <!-- الـ Quote -->
+    <!-- Quote -->
     <div class="quote-box">
         <p id="quoteText"></p>
     </div>
 
-    <!-- الإحصائيات -->
-    <div class="stats-box">
-        <div class="stat-card">
-            <div class="stat-emoji">📅</div>
-            <div class="stat-value" id="sessionsToday">0</div>
-            <div class="stat-label">جلسات اليوم</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-emoji">⏱️</div>
-            <div class="stat-value" id="minutesToday">0</div>
-            <div class="stat-label">دقيقة النهارده</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-emoji">🏆</div>
-            <div class="stat-value" id="totalSessions">0</div>
-            <div class="stat-label">إجمالي الجلسات</div>
-        </div>
-    </div>
-
     <script src="app.js"></script>
-
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/MyOwnTimer/sw.js');
+            navigator.serviceWorker.register('./sw.js');
         }
     </script>
 </body>
